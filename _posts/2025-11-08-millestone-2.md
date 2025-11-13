@@ -151,6 +151,16 @@ The **combined distance + angle model** (green curve) aligns most closely with t
 The **distance-only model** (blue curve) follows a similar trend, though slightly below the perfect calibration line, suggesting a mild tendency to underestimate goal probabilities.
 In contrast, the **angle-only model** (orange curve) and the **random baseline** (red curve) deviate more substantially, revealing weaker calibration and poorer confidence alignment.
 
+#### **Logistic Regression with distance**
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/model1-distance/v0)
+
+#### **Logistic Regression with angle**
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/model2-angle/v0)
+
+#### **Logistic Regression with distance and angle**
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/model3-distance-angle/v0)
+
+
 ## <span style="color:#1E90FF;">Feature Engineering II Question</span>
 code related to it: ift6758/data/feature_engineering_pt2.py ift6758/notebooks/feature_engineering_two.ipynb
 
