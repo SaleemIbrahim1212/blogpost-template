@@ -39,9 +39,6 @@ As the angle widens (shots from the side), both shot frequency and goal proporti
 
 
 
-
-
-
 ###  2D Histogram — Distance vs Angle
  ![2D Histogram: Distance vs Angle](public/milestone2/image/FeatureEngineering1/shot_distribution.png)
  <br>
@@ -178,6 +175,8 @@ In this section, we expanded our dataset by creating new engineered features. He
 
 **distance_shot** — The distance from the shooter’s position to the net.
 
+**game_seconds_true** -  Calculates the true game event seconds given across the game of hockey.
+
 
 
 
@@ -215,7 +214,9 @@ For **categorical columns**, missing entries were replaced with the placeholder 
 
 Time-related columns such as `game_time` and `period_time` were converted from "MM:SS" string format into total seconds using helper functions:
 X = adv._calculate_time_second(X)
+
 X = adv._calculate_period_second(X)
+
 After conversion, the original string columns were dropped.
 We then standardized all numerical columns to keep continuous features on comparable scales and to avoid numerical instability during training.
 Excluded columns such as shot_type, previous_event_name (categorical), and rebound (binary) were not scaled.
@@ -223,8 +224,8 @@ Excluded columns such as shot_type, previous_event_name (categorical), and rebou
 Next, **one-hot encoding** was applied to categorical variables like `shot_type` and `previous_event_name`.
 Since these variables have no ordinal relationship between categories, one-hot encoding ensures that each type is treated as an independent feature.
 
-After building a simple XGBoost model using only `distance_to_net` and `shot_angle` in the previous section, I extended the model by incorporating all engineered features — such as rebound indicators, speed, time since last event, and shot angle change.
-To further improve the model’s predictive performance, I performed **hyperparameter tuning** using `RandomizedSearchCV` over a broad parameter space.
+After building a simple XGBoost model using only `distance_to_net` and `shot_angle` in the previous section, We extended the model by incorporating all engineered features — such as rebound indicators, speed, time since last event, and shot angle change.
+To further improve the model’s predictive performance, we performed **hyperparameter tuning** using `RandomizedSearchCV` over a broad parameter space.
 The parameters explored included:
 - the number of estimators (`n_estimators`),
 - maximum tree depth (`max_depth`),
@@ -238,7 +239,6 @@ Cross-validation was performed with **3 folds**, using **AUC** as the main evalu
 ### Why We Applied Calibration to XGBoost
 
 Although XGBoost performs very well in terms of classification accuracy and ranking, its predicted probabilities are often **not well calibrated**.
-For example, when the model predicts a 0.8 chance of scoring, in reality, the true probability might be closer to 0.6 — making the model **overconfident**.
 
 To fix this, we applied a **calibration layer** on top of the trained XGBoost model using the `CalibratedClassifierCV` function from scikit-learn.
 This extra layer adjusts the predicted probabilities to better reflect the observed goal frequencies.
@@ -262,9 +262,87 @@ Finally, the **Reliability Curve** aligns more closely with the perfect calibrat
 Overall, adding  features allows the model to capture more realistic hockey dynamics, improving both **accuracy** and **interpretability** compared to the baseline version.
 
 
+
+
+### Feature Selection
+
+Now let's  explore several **feature selection** techniques to check whether removing redundant or low-importance features could simplify the model and potentially improve its performance.
+
+#### 1. Correlation-Based Filtering
+We first examined **feature correlation** among numerical variables. Highly correlated features can introduce redundancy and may not provide new information to the model.
+Using a correlation threshold of **0.8**, we identified the following pairs with near-perfect correlation: 'previous_event_timeseconds' with 'period_time_seconds' and 'previous_event_timeperiod_seconds' with 'period_time_seconds'.
+After removing these redundant columns and retraining the model, the validation metrics remained almost unchanged:
+**AUC = 0.7779**, **F1 = 0.303**, **Accuracy = 0.674**.
+This indicated that these features contributed very little to the overall performance.
+
+
+#### 2. Variance Threshold
+
+Next, we applied a **VarianceThreshold** with a threshold of **0.01** to remove features with almost no variation across samples.
+This method removed **8 low-variance features**, such as `shot_type_Unknown`, `previous_event_name_goal`, and `previous_event_name_penalty`.
+
+After retraining the model, the performance slightly decreased:
+**AUC = 0.7757**, **F1 = 0.3009**, **Accuracy = 0.672**.
+Thus, low-variance features, although not individually important, still provided minor complementary information to the model.
+
+
+#### 3. Mutual Information
+
+To further understand feature importance, we used **Mutual Information (MI)**, which measures the dependency between each feature and the target variable.
+The plot below shows that variables such as `shot_type_wrist`, `distance_shot`, `angle_shot`, and `num_friendly_skaters` had the highest mutual information scores, meaning they contributed the most predictive signal.
+
+![mutualInformation](public/milestone2/image/advancedModels/mutualInformation.png)
+
+
+However, removing features with low MI scores did not improve the model’s validation AUC.
+
+
+
+#### 4. Recursive Feature Elimination (RFE)
+
+Also we use another method **Recursive Feature Elimination (RFE)** with XGBoost as the base estimator, selecting the top **25 features**.
+After retraining the model, the results were:
+
+**AUC = 0.7777**, **F1 = 0.112**, **Accuracy = 0.910**.
+
+Both the accuracy and  F1 score  decreased, showing that aggressive feature reduction caused the model to lose important interactions.
+
+
+####  Final Observation
+
+After testing multiple feature selection techniques — correlation filtering, variance thresholding, mutual information, and recursive feature elimination — we found that **keeping all engineered features produced the best overall performance**.
+
+In conclusion, the **full feature set** achieves the most balanced and reliable results for this task.
+
+#### 2.3 W&B Runs and Model References
+
+Below are the **Weights & Biases (W&B)** run links that were used to generate the plots and metrics displayed above.
+Each run corresponds to a specific methodology or model configuration evaluated in our research.
+
+---
+
+#### **XGB with distance and angle**
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_baseline/v1)
+
+#### **XGB with all features**
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_all_features/v0)
+
+#### **XGB with feature selection Variance Threshold**
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_selected_features_var/v0)
+
+#### **XGB with feature selection Recursive Feature Elimination**
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_selected_features_rfe/v0)
+
+
+
+
+
+
 ## <span style="color:#1E90FF;">Give it your best shot Question</span>
 
-## 1. Methodologies and Models Tested
+code related to it: notebooks/give_it_your_best_shot.ipynb
+
+### 1. Methodologies and Models Tested
 
 These are the following plots for the methodologies tested.
 
@@ -307,11 +385,11 @@ Overall, our best model was indeed the **CatBoost classifier**, as when running 
 
 ---
 
-## 2. Performance Plots and Metrics
+### 2. Performance Plots and Metrics
 
 These are the plots for the following curves for the respective methodologies which we found interesting to note:
 
-### 2.1 Plots
+####2.1 Plots
 **ROC Curve (Distance + Angle)**
 [![ROC Curve](public/milestone2/image/give_it_your_best_shot/roc_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74/panel/jw48ews1m?nw=nwusergafranijaz)
 
@@ -324,7 +402,7 @@ These are the plots for the following curves for the respective methodologies wh
 **Reliability Curve – Validation**
 [![Reliability](public/milestone2/image/give_it_your_best_shot/reliability_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74/panel/b500ldcu6?nw=nwusergafranijaz)
 
-### 2.2 Metrics
+#### 2.2 Metrics
 
 Below are the comparative results for the four main methodologies tested in our research.
 For each approach, we include three key evaluation plots — **ROC/AUC Curve**, **Brier Score**, and **Accuracy** — which help visualize model performance across different metrics.
@@ -386,7 +464,7 @@ For each approach, we include three key evaluation plots — **ROC/AUC Curve**, 
 These are the scores for the respective methods we tried.
 *Important to note that all these models are using **CatBoost**, and not any of the other five models mentioned beforehand.*
 
-### 2.3 W&B Runs and Model References
+#### 2.3 W&B Runs and Model References
 
 Below are the **Weights & Biases (W&B)** run links that were used to generate the plots and metrics displayed above.
 Each run corresponds to a specific methodology or model configuration evaluated in our research.
