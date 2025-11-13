@@ -59,7 +59,7 @@ To further explore the relationship between shot characteristics and scoring suc
  ![Goal Rate vs Distance](public/milestone2/image/FeatureEngineering1/goalRatevsDistance.png)
  <br>
 From the first figure, we observe that the **goal rate is highest when players are close to the net**, confirming that short-range shots are the most effective.
-Interestingly, the goal rate shows a **small rebound at distances greater than 100 feet**, which could explain the few long-distance shots observed earlier in the *Shot Counts by Distance* figure.
+Interestingly, the goal rate shows a **small rebound at distances greater than 80 feet**, which could explain the few long-distance shots observed earlier in the *Shot Counts by Distance* figure.
 These long-range goals typically correspond to **empty-net situations**, where the opposing team has pulled its goalie.
 
 
@@ -353,7 +353,7 @@ Each run corresponds to a specific methodology or model configuration evaluated 
 
 code related to it: notebooks/give_it_your_best_shot.ipynb
 
-### 1. Methodologies and Models Tested
+## 1. Methodologies and Models Tested
 
 These are the following plots for the methodologies tested.
 
@@ -396,24 +396,24 @@ Overall, our best model was indeed the **CatBoost classifier**, as when running 
 
 ---
 
-### 2. Performance Plots and Metrics
+## 2. Performance Plots and Metrics
 
 These are the plots for the following curves for the respective methodologies which we found interesting to note:
 
-####2.1 Plots
+### 2.1 Plots
 **ROC Curve (Distance + Angle)**
-[![ROC Curve](public/milestone2/image/give_it_your_best_shot/roc_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74/panel/jw48ews1m?nw=nwusergafranijaz)
+[![ROC Curve](public/milestone2/image/give_it_your_best_shot/roc_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/jw48ews1m?nw=nwusergafranijaz)
 
 **Goal Rate vs Probability Percentile**
-[![Goal Rate](public/milestone2/image/give_it_your_best_shot/goal_rate.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74/panel/i367l86m7?nw=nwusergafranijaz)
+[![Goal Rate](public/milestone2/image/give_it_your_best_shot/goal_rate.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/i367l86m7?nw=nwusergafranijaz)
 
 **Cumulative Goals vs Shots**
-[![Cumulative Goals](public/milestone2/image/give_it_your_best_shot/cumulative_goals.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74/panel/6np7s0575?nw=nwusergafranijaz)
+[![Cumulative Goals](public/milestone2/image/give_it_your_best_shot/cumulative_goals.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/6np7s0575?nw=nwusergafranijaz)
 
 **Reliability Curve – Validation**
-[![Reliability](public/milestone2/image/give_it_your_best_shot/reliability_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74/panel/b500ldcu6?nw=nwusergafranijaz)
+[![Reliability](public/milestone2/image/give_it_your_best_shot/reliability_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/b500ldcu6?nw=nwusergafranijaz)
 
-#### 2.2 Metrics
+### 2.2 Metrics
 
 Below are the comparative results for the four main methodologies tested in our research.
 For each approach, we include three key evaluation plots — **ROC/AUC Curve**, **Brier Score**, and **Accuracy** — which help visualize model performance across different metrics.
@@ -452,7 +452,7 @@ For each approach, we include three key evaluation plots — **ROC/AUC Curve**, 
 [![Lasso ROC](public/milestone2/image/metrics/lasso/lasso_roc.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=lasso_regularization%2Froc_auc&panelSectionName=lasso_regularization)
 
 **Brier Score**
-[![Lasso Brier](public/milestone2/image/metrics/lasso/lasso_brier.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=lasso_regularization%2Fbrier&panelSectionName=lasso_regularization)
+[![Lasso Brier](.public/milestone2/image/metrics/lasso/lasso_brier.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=lasso_regularization%2Fbrier&panelSectionName=lasso_regularization)
 
 **Accuracy**
 [![Lasso Accuracy](public/milestone2/image/metrics/lasso/lasso_accuracy.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=lasso_regularization%2Faccuracy&panelSectionName=lasso_regularization)
@@ -475,7 +475,7 @@ For each approach, we include three key evaluation plots — **ROC/AUC Curve**, 
 These are the scores for the respective methods we tried.
 *Important to note that all these models are using **CatBoost**, and not any of the other five models mentioned beforehand.*
 
-#### 2.3 W&B Runs and Model References
+### 2.3 W&B Runs and Model References
 
 Below are the **Weights & Biases (W&B)** run links that were used to generate the plots and metrics displayed above.
 Each run corresponds to a specific methodology or model configuration evaluated in our research.
@@ -497,5 +497,96 @@ Each run corresponds to a specific methodology or model configuration evaluated 
 ---
 
 *Each of the above runs contains detailed logs, metrics, and visualizations used in generating the figures for Sections 2.1 and 2.2.*
+
+
+
+## <span style="color:#1E90FF;">Evaluate on test set</span>
+
+
+In this section, we evaluate the five final models on the untouched 2020–2021 regular season and playoff test sets. These results reveal each model’s true generalization ability on data that was never seen during training. We include the four required evaluation plots for both datasets and compare how performance changes between the regular season and playoffs.
+
+---
+
+## Regular Season Games
+
+In this section, we evaluate the five required models on the regular-season portion of the 2020–2021 test set. These models include:
+
+- **Model 1:** Logistic Regression (Distance)
+- **Model 2:** Logistic Regression (Angle)
+- **Model 3:** Logistic Regression (Distance + Angle)
+- **Model 4:** XGBoost (All features)
+- **Model 5:** GridSearch CatBoost (All features)
+
+![CumulativePlayoff](public/milestone2/image/EvaluateTestTest/CumulativePlayoff.png)
+![CumulativeRegular](public/milestone2/image/EvaluateTestTest/CumulativeRegular.png)
+![GoalRatePlayoff](public/milestone2/image/EvaluateTestTest/GoalRatePlayoff.png)
+![GoalRateRegular](public/milestone2/image/EvaluateTestTest/GoalRateRegular.png)
+![ReliabilityPlayoff](public/milestone2/image/EvaluateTestTest/ReliabilityPlayoff.png)
+![ReliabilityRegular](public/milestone2/image/EvaluateTestTest/ReliabilityRegular.png)
+
+By examining the ROC curves and complementary evaluation figures, we can quickly identify clear performance differences among the models.
+
+At first glance, three models stand out from the others in Figure XX:
+**XGBoost (Model 4), Logistic Regression with Distance + Angle (Model 3), and Logistic Regression with Distance only (Model 1).**
+These models achieve noticeably higher AUC values compared to the two weaker baselines.
+
+- **Model 4 (XGBoost): AUC = 0.741**
+- **Model 3 (Distance + Angle): AUC = 0.700**
+- **Model 1 (Distance): AUC = 0.699**
+
+Although these differences are not large enough to conclude statistical significance without confidence intervals, they indicate that the inclusion of distance—and especially the nonlinear structure learned by XGBoost—plays a crucial role in ranking shot danger.
+
+In contrast, the Logistic Regression model trained on angle alone (**Model 2**) performs substantially worse (**AUC = 0.509**), barely above random guessing. This is consistent with hockey intuition: angle alone contains limited information unless combined with distance.
+
+The GridSearch-tuned CatBoost model (**Model 5**) performs moderately well (**AUC = 0.665**), but its performance still falls short of XGBoost, suggesting that feature interactions and nonlinearities are important for this task.
+
+The **goal-rate vs probability percentile** plots further highlight these differences.
+XGBoost consistently identifies the highest-danger shots, as seen by its sharp peak at the top percentiles, while the angle-only model produces highly unstable goal-rate curves.
+Similarly, in the **cumulative proportion of goals** plot, XGBoost retrieves goals more efficiently than any logistic regression baseline.
+
+**Taken together**, these results indicate that for regular-season games:
+
+- XGBoost is the most effective model,
+- Logistic Regression (Distance + Angle) performs surprisingly well given its simplicity,
+- Angle alone proves insufficient for meaningful prediction.
+
+---
+
+## Playoff Games
+
+When evaluating the same five models on the playoff test set, we observe largely consistent trends, although overall AUC values are slightly lower for all models—a pattern often associated with increased defensive structure and lower goal rates in playoff hockey.
+
+Again, three models clearly rise above the rest:
+
+- **Model 4 (XGBoost): AUC = 0.725**
+- **Model 3 (Distance + Angle): AUC = 0.677**
+- **Model 1 (Distance): AUC = 0.676**
+
+These results mirror the ranking observed in the regular season, reinforcing that distance and feature interactions remain strong predictors regardless of game context.
+
+Model 2 (Angle) remains the weakest baseline, with **AUC = 0.508**, nearly identical to its regular-season performance.
+Model 5 (GridSearch CatBoost) performs reasonably well (**AUC = 0.664**), but still does not approach the performance of XGBoost.
+
+The **cumulative goal proportion** plots show similar behavior:
+XGBoost retrieves goals earlier and more consistently, whereas Model 2 continues to lag far behind.
+
+The **calibration curves** also reveal an interesting contrast:
+
+- Logistic Regression models (Models 1–3) are relatively well-calibrated.
+- XGBoost and CatBoost (Models 4–5) tend to **overpredict** high probabilities, leading to overconfidence at the upper end.
+
+---
+
+## Summary
+
+Across both regular-season and playoff test sets, the evaluation consistently shows that:
+
+- **XGBoost (Model 4)** is the strongest model overall, achieving the highest AUC, best goal-retrieval curves, and most consistent ranking performance.
+- **Logistic Regression (Distance + Angle, Model 3)** performs surprisingly well and serves as an effective linear baseline.
+- **Distance-only Logistic Regression (Model 1)** is simple yet competitive, confirming distance as the most predictive individual feature.
+- **GridSearch CatBoost (Model 5)** improves over the basic logistic baselines but still cannot match the performance of XGBoost.
+- **Angle-only Logistic Regression (Model 2)** is by far the weakest model, reinforcing that angle alone is not sufficient without distance.
+
+CatBoost is a powerful gradient boosting model with advantages such as native handling of categorical variables, strong regularization, and effective self-calibration. Because of these built-in capabilities, it is not surprising to observe slightly better performance from CatBoost compared to standard logistic regression, though in this task, XGBoost remains superior in ranking ability.
 
 
