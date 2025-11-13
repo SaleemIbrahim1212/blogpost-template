@@ -47,7 +47,7 @@ The **color intensity** represents shot frequency:
 - **Brighter colors** (e.g., *yellow*, *light blue*) → more frequent shot zones.
 - **Darker colors** (e.g., *pink*, *purple*) → less frequent shot zones.
 
-Most shots cluster in the **lower-left region** (short distance and small angle), showing that players tend to shoot from **high-probability areas near the center front of the net**.
+Most shots cluster in the **bottom region** (short distance and small angle), showing that players tend to shoot from **high-probability areas near the center front of the net**.
 
 
 
@@ -59,7 +59,7 @@ To further explore the relationship between shot characteristics and scoring suc
  ![Goal Rate vs Distance](public/milestone2/image/FeatureEngineering1/goalRatevsDistance.png)
  <br>
 From the first figure, we observe that the **goal rate is highest when players are close to the net**, confirming that short-range shots are the most effective.
-Interestingly, the goal rate shows a **small rebound at distances greater than 100 feet**, which helps explain the few long-distance shots observed earlier in the *Shot Counts by Distance* figure.
+Interestingly, the goal rate shows a **small rebound at distances greater than 100 feet**, which could explain the few long-distance shots observed earlier in the *Shot Counts by Distance* figure.
 These long-range goals typically correspond to **empty-net situations**, where the opposing team has pulled its goalie.
 
 
@@ -187,7 +187,8 @@ In this section, we expanded our dataset by creating new engineered features. He
 
 **game_seconds_true** -  Calculates the true game event seconds given across the game of hockey.
 
-
+**A sample dataframe can be found below**
+[WPG vs WSH Dataset Artifact](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/dataset/wpg_v_wsh_2017021065)
 
 
 ## <span style="color:#1E90FF;">Advanced Models Question</span>
