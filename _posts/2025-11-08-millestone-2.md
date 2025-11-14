@@ -373,7 +373,7 @@ The best model across all the testing was the **CatBoost classifier**.
 > This pattern — where **CatBoost consistently outperformed** other models — was also observed in additional optimization tests that we conducted but did not include in this report.
 > The full details of those experiments can be reviewed in the notebook  `give_it_your_best_shot.ipynb`
 
-After obtaining our optimized hyperparameters, we also conducted other approaches which we found to be interesting to try out different models to increase accuracy while reducing error. To determine if one model was better than another, we chose to compare the **ROC score** instead of accuracy. This is an arbitrary metric we chose, but accuracy could have been chosen if desired.
+After obtaining our optimized hyperparameters, we also conducted other approaches which we found to be interesting to try out different models to increase accuracy while reducing error. To determine if one model was better than another, we chose to compare the **ROC score** instead of accuracy, as this metric also accounts for class imbalances.
 
 Our second approach was to try **MRMR (Minimum Redundancy Maximum Relevance)** in which we observed the most relevant features in the dataframe while removing all the ones that weren't useful. This resulted in the following graph which shows the feature relevancy according to this methodology:
 
@@ -398,10 +398,10 @@ Overall, our best model was indeed the **CatBoost classifier**, as when running 
 
 ## 2. Performance Plots and Metrics
 
-These are the plots for the following curves for the respective methodologies which we found interesting to note:
+These are the plots for the following curves for the respective methodologies which we found interesting to note, all models below are from best performing CatBoost:
 
 ### 2.1 Plots
-**ROC Curve (Distance + Angle)**
+**ROC Curve (CatBoost)**
 [![ROC Curve](public/milestone2/image/give_it_your_best_shot/roc_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/jw48ews1m?nw=nwusergafranijaz)
 
 **Goal Rate vs Probability Percentile**
@@ -507,9 +507,10 @@ In this section, we evaluate the five final models on the untouched 2020–2021 
 
 ---
 
+
 ## Regular Season Games
 
-In this section, we evaluate the five required models on the regular-season portion of the 2020–2021 test set. These models include:
+In this section, we evaluate the five required models on the regular-season portion of the 2020–2021 test set. These models include and any further reference for models is based on:
 
 - **Model 1:** Logistic Regression (Distance)
 - **Model 2:** Logistic Regression (Angle)
@@ -517,36 +518,36 @@ In this section, we evaluate the five required models on the regular-season port
 - **Model 4:** XGBoost (All features)
 - **Model 5:** GridSearch CatBoost (All features)
 
-![CumulativePlayoff](public/milestone2/image/EvaluateTestTest/CumulativePlayoff.png)
+![ROCPlayoff](public/milestone2/image/EvaluateTestTest/ROCRegular.png)
 ![CumulativeRegular](public/milestone2/image/EvaluateTestTest/CumulativeRegular.png)
-![GoalRatePlayoff](public/milestone2/image/EvaluateTestTest/GoalRatePlayoff.png)
 ![GoalRateRegular](public/milestone2/image/EvaluateTestTest/GoalRateRegular.png)
-![ReliabilityPlayoff](public/milestone2/image/EvaluateTestTest/ReliabilityPlayoff.png)
 ![ReliabilityRegular](public/milestone2/image/EvaluateTestTest/ReliabilityRegular.png)
 
 By examining the ROC curves and complementary evaluation figures, we can quickly identify clear performance differences among the models.
 
 At first glance, three models stand out from the others in Figure XX:
-**XGBoost (Model 4), Logistic Regression with Distance + Angle (Model 3), and Logistic Regression with Distance only (Model 1).**
+**CatBoost, XGBoost, Logistic Regression with Distance + Angle, and Logistic Regression with Distance only.**
 These models achieve noticeably higher AUC values compared to the two weaker baselines.
 
-- **Model 4 (XGBoost): AUC = 0.741**
-- **Model 3 (Distance + Angle): AUC = 0.700**
-- **Model 1 (Distance): AUC = 0.699**
+- **CatBoost: AUC = 0.775**
+- **XGBoost  (All Features): AUC = 0.769**
+- Logistic (Distance + Angle): AUC = 0.700
+- Logistic (Distance): AUC = 0.699
+- Logistic (Angle): AUC = 0.509
 
 Although these differences are not large enough to conclude statistical significance without confidence intervals, they indicate that the inclusion of distance—and especially the nonlinear structure learned by XGBoost—plays a crucial role in ranking shot danger.
 
 In contrast, the Logistic Regression model trained on angle alone (**Model 2**) performs substantially worse (**AUC = 0.509**), barely above random guessing. This is consistent with hockey intuition: angle alone contains limited information unless combined with distance.
 
-The GridSearch-tuned CatBoost model (**Model 5**) performs moderately well (**AUC = 0.665**), but its performance still falls short of XGBoost, suggesting that feature interactions and nonlinearities are important for this task.
+The GridSearch-tuned CatBoost model (**Model 5**) performs the best  (**AUC = 0.775**), This is very similar to XGBoost, which is not a surprise as this was the exact behavoir observed in validation set 
 
 The **goal-rate vs probability percentile** plots further highlight these differences.
-XGBoost consistently identifies the highest-danger shots, as seen by its sharp peak at the top percentiles, while the angle-only model produces highly unstable goal-rate curves.
+XGBoost and CatBoost consistently identifies the highest-danger shots, as seen by its sharp peak at the top percentiles, while the angle-only model produces highly unstable goal-rate curves.
 Similarly, in the **cumulative proportion of goals** plot, XGBoost retrieves goals more efficiently than any logistic regression baseline.
 
 **Taken together**, these results indicate that for regular-season games:
 
-- XGBoost is the most effective model,
+- XGBoost and CatBoost with all features are the two most effective model (this seems to indicate a pattern with Gradient Boosted Trees),
 - Logistic Regression (Distance + Angle) performs surprisingly well given its simplicity,
 - Angle alone proves insufficient for meaningful prediction.
 
@@ -556,16 +557,23 @@ Similarly, in the **cumulative proportion of goals** plot, XGBoost retrieves goa
 
 When evaluating the same five models on the playoff test set, we observe largely consistent trends, although overall AUC values are slightly lower for all models—a pattern often associated with increased defensive structure and lower goal rates in playoff hockey.
 
-Again, three models clearly rise above the rest:
+![ROCPlayoff](public/milestone2/image/EvaluateTestTest/ROCPlayoff.png)
+![CumulativePlayoff](public/milestone2/image/EvaluateTestTest/CumulativePlayoff.png)
+![GoalRatePlayoff](public/milestone2/image/EvaluateTestTest/GoalRatePlayoff.png)
+![ReliabilityPlayoff](public/milestone2/image/EvaluateTestTest/ReliabilityPlayoff.png)
 
-- **Model 4 (XGBoost): AUC = 0.725**
-- **Model 3 (Distance + Angle): AUC = 0.677**
-- **Model 1 (Distance): AUC = 0.676**
+Again, two models clearly rise above the rest:
+
+- **CatBoost: AUC = 0.757**
+- **XGBoost  (All Features): AUC = 0.756**
+- Logistic (Distance + Angle): AUC = 0.677
+- Logistic (Distance): AUC = 0.676
+- Logistic (Angle): AUC = 0.508
 
 These results mirror the ranking observed in the regular season, reinforcing that distance and feature interactions remain strong predictors regardless of game context.
 
-Model 2 (Angle) remains the weakest baseline, with **AUC = 0.508**, nearly identical to its regular-season performance.
-Model 5 (GridSearch CatBoost) performs reasonably well (**AUC = 0.664**), but still does not approach the performance of XGBoost.
+Logistic Model (Angle) remains the weakest baseline, with **AUC = 0.508**, nearly identical to its regular-season performance.
+Model 5 (GridSearch CatBoost) performs the best (**AUC = 0.757**) and is closely followed by XGBoost (0.756)
 
 The **cumulative goal proportion** plots show similar behavior:
 XGBoost retrieves goals earlier and more consistently, whereas Model 2 continues to lag far behind.
@@ -573,20 +581,24 @@ XGBoost retrieves goals earlier and more consistently, whereas Model 2 continues
 The **calibration curves** also reveal an interesting contrast:
 
 - Logistic Regression models (Models 1–3) are relatively well-calibrated.
-- XGBoost and CatBoost (Models 4–5) tend to **overpredict** high probabilities, leading to overconfidence at the upper end.
+- CatBoost tends to **overpredict** high probabilities, leading to overconfidence at the upper end.
 
----
+**Adressing the observed differences seen in Playoff and Regular**
+
+The differences in AUC between Playoff and Regular season data can likely be attributed to several factors. First, the sample size for Playoff games is much smaller, which naturally increases variance and makes model performance less stable. In addition, Playoff hockey is more competitive, with higher stakes and more structured defensive play. Teams often tighten their systems, and both shooters and goaltenders tend to be of higher average quality compared to the full regular-season population.
+
+These factors can all contribute to the shifts we observe in AUC.However, it is important to note that the relative ranking of our models remains unchanged, suggesting that the underlying relationships captured by the models are consistent across contexts even if absolute performance varies.
 
 ## Summary
 
 Across both regular-season and playoff test sets, the evaluation consistently shows that:
 
-- **XGBoost (Model 4)** is the strongest model overall, achieving the highest AUC, best goal-retrieval curves, and most consistent ranking performance.
+- Gradient Boosted Models  **XGBoost (Model 4)**  and **CatBoost** are the strongest model overalls, achieving the highest AUC, best goal-retrieval curves, and most consistent ranking performance.
 - **Logistic Regression (Distance + Angle, Model 3)** performs surprisingly well and serves as an effective linear baseline.
 - **Distance-only Logistic Regression (Model 1)** is simple yet competitive, confirming distance as the most predictive individual feature.
 - **GridSearch CatBoost (Model 5)** improves over the basic logistic baselines but still cannot match the performance of XGBoost.
 - **Angle-only Logistic Regression (Model 2)** is by far the weakest model, reinforcing that angle alone is not sufficient without distance.
 
-CatBoost is a powerful gradient boosting model with advantages such as native handling of categorical variables, strong regularization, and effective self-calibration. Because of these built-in capabilities, it is not surprising to observe slightly better performance from CatBoost compared to standard logistic regression, though in this task, XGBoost remains superior in ranking ability.
+CatBoost is a powerful gradient boosting model with advantages such as native handling of categorical variables, strong regularization, and effective self-calibration. Because of these built-in capabilities, it is not surprising to observe slightly better performance from CatBoost compared to XGBoost. An interesting observation we noticed during this process, is that distance+angle is already a really powerful feature, in game context only can add so much to get better performances.
 
 
