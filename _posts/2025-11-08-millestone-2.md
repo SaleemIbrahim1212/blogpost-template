@@ -336,7 +336,7 @@ Each run corresponds to a specific methodology or model configuration evaluated 
 🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_baseline/v1)
 
 #### **XGB with all features**
-🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_all_features/v0)
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_all_features/v2)
 
 #### **XGB with feature selection Variance Threshold**
 🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_selected_features_var/v0)
@@ -483,16 +483,16 @@ Each run corresponds to a specific methodology or model configuration evaluated 
 ---
 
 #### **Grid Search**
-🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/gridsearch_best/v3)
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/gridsearch_best/v5/overview)
 
 #### **MRMR (Minimum Redundancy Maximum Relevance)**
-🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/mrmr_top_20/v3)
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/mrmr_top_20/v5/overview)
 
 #### **Lasso Regularization**
-🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/lasso_regularization/v3)
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/lasso_regularization/v5/overview)
 
 #### **Split with 20 Features Removed**
-🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/removed_20_features/v3)
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/removed_20_features/v5/overview)
 
 ---
 
