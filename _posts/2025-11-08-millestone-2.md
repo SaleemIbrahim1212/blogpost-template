@@ -152,7 +152,7 @@ The **distance-only model** (blue curve) follows a similar trend, though slightl
 In contrast, the **angle-only model** (orange curve) and the **random baseline** (red curve) deviate more substantially, revealing weaker calibration and poorer confidence alignment.
 
 #### **Logistic Regression with distance**
-🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/model1-distance/v0)
+🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/model1-distance/v0) 
 
 #### **Logistic Regression with angle**
 🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/model2-angle/v0)
@@ -344,9 +344,7 @@ Each run corresponds to a specific methodology or model configuration evaluated 
 #### **XGB with feature selection Recursive Feature Elimination**
 🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/xgb_selected_features_rfe/v0)
 
-
-
-
+[W&B run](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/egkbjxzd?nw=nwusersaleemibrahim)
 
 
 ## <span style="color:#1E90FF;">Give it your best shot Question</span>
@@ -377,7 +375,7 @@ After obtaining our optimized hyperparameters, we also conducted other approache
 
 Our second approach was to try **MRMR (Minimum Redundancy Maximum Relevance)** in which we observed the most relevant features in the dataframe while removing all the ones that weren't useful. This resulted in the following graph which shows the feature relevancy according to this methodology:
 
-[![MRMR Feature Relevance](public/milestone2/image/give_it_your_best_shot/figures/mrmr_feature_relevance.png)](public/milestone2/image/give_it_your_best_shot/figures/mrmr_feature_relevance.png)
+![MRMR Feature Relevance](public/milestone2/image/give_it_your_best_shot/figures/mrmr_feature_relevance.png)
 
 This kept 20 out of the 39 features and we then trained the model. This resulted in performance similar to the grid search method, and the models didn't yield any significant improvements.
 
@@ -402,74 +400,77 @@ These are the plots for the following curves for the respective methodologies wh
 
 ### 2.1 Plots
 **ROC Curve (CatBoost)**
-[![ROC Curve](public/milestone2/image/give_it_your_best_shot/roc_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/jw48ews1m?nw=nwusergafranijaz)
+![ROC Curve](public/milestone2/image/give_it_your_best_shot/roc_curve.png)
 
 **Goal Rate vs Probability Percentile**
-[![Goal Rate](public/milestone2/image/give_it_your_best_shot/goal_rate.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/i367l86m7?nw=nwusergafranijaz)
+![Goal Rate](public/milestone2/image/give_it_your_best_shot/goal_rate.png)
 
 **Cumulative Goals vs Shots**
-[![Cumulative Goals](public/milestone2/image/give_it_your_best_shot/cumulative_goals.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/6np7s0575?nw=nwusergafranijaz)
+![Cumulative Goals](public/milestone2/image/give_it_your_best_shot/cumulative_goals.png)
 
 **Reliability Curve – Validation**
-[![Reliability](public/milestone2/image/give_it_your_best_shot/reliability_curve.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/2x83dqx3/panel/b500ldcu6?nw=nwusergafranijaz)
+![Reliability](public/milestone2/image/give_it_your_best_shot/reliability_curve.png)
+
+[Links to plots on WandB](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/ytm7z31n?nw=nwusersaleemibrahim)
+
 
 ### 2.2 Metrics
 
 Below are the comparative results for the four main methodologies tested in our research.
 For each approach, we include three key evaluation plots — **ROC/AUC Curve**, **Brier Score**, and **Accuracy** — which help visualize model performance across different metrics.
 
+[Links to plots and Metrics on WandB](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/ytm7z31n?nw=nwusersaleemibrahim)
+
 ---
 
 #### **Grid Search**
 
 **ROC / AUC Curve**
-[![Grid Search ROC](public/milestone2/image/metrics/grid_search/gs_roc.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=gridsearch_best%2Froc_auc&panelSectionName=gridsearch_best)
+![Grid Search ROC](public/milestone2/image/metrics/grid_search/gs_roc.png)
 
 **Brier Score**
-[![Grid Search Brier](public/milestone2/image/metrics/grid_search/gs_brier.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=gridsearch_best%2Fbrier&panelSectionName=gridsearch_best)
+![Grid Search Brier](public/milestone2/image/metrics/grid_search/gs_brier.png)
 
 **Accuracy**
-[![Grid Search Accuracy](public/milestone2/image/metrics/grid_search/gs_accuracy.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=gridsearch_best%2Faccuracy&panelSectionName=gridsearch_best)
+![Grid Search Accuracy](public/milestone2/image/metrics/grid_search/gs_accuracy.png)
 
 ---
 
 #### **MRMR (Minimum Redundancy Maximum Relevance)**
 
 **ROC / AUC Curve**
-[![MRMR ROC](public/milestone2/image/metrics/mrmr/mrmr_roc.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=mrmr_top_20%2Froc_auc&panelSectionName=mrmr_top_20)
+![MRMR ROC](public/milestone2/image/metrics/mrmr/mrmr_roc.png)
 
 **Brier Score**
-[![MRMR Brier](public/milestone2/image/metrics/mrmr/mrmr_brier.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=mrmr_top_20%2Fbrier&panelSectionName=mrmr_top_20)
+![MRMR Brier](public/milestone2/image/metrics/mrmr/mrmr_brier.png)
 
 **Accuracy**
-[![MRMR Accuracy](public/milestone2/image/metrics/mrmr/mrmr_accuracy.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=mrmr_top_20%2Faccuracy&panelSectionName=mrmr_top_20)
+![MRMR Accuracy](public/milestone2/image/metrics/mrmr/mrmr_accuracy.png)
 
 ---
 
 #### **Lasso Regularization**
 
 **ROC / AUC Curve**
-[![Lasso ROC](public/milestone2/image/metrics/lasso/lasso_roc.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=lasso_regularization%2Froc_auc&panelSectionName=lasso_regularization)
+![Lasso ROC](public/milestone2/image/metrics/lasso/lasso_roc.png)
 
 **Brier Score**
-[![Lasso Brier](.public/milestone2/image/metrics/lasso/lasso_brier.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=lasso_regularization%2Fbrier&panelSectionName=lasso_regularization)
+![Lasso Brier](.public/milestone2/image/metrics/lasso/lasso_brier.png)
 
 **Accuracy**
-[![Lasso Accuracy](public/milestone2/image/metrics/lasso/lasso_accuracy.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=lasso_regularization%2Faccuracy&panelSectionName=lasso_regularization)
-
+![Lasso Accuracy](public/milestone2/image/metrics/lasso/lasso_accuracy.png)
 ---
 
 #### **Split with 20 Features Removed**
 
 **ROC / AUC Curve**
-[![Split ROC](public/milestone2/image/metrics/split_20_features/split_roc.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=removed_20_features%2Froc_auc&panelSectionName=removed_20_features)
+![Split ROC](public/milestone2/image/metrics/split_20_features/split_roc.png)
 
 **Brier Score**
-[![Split Brier](public/milestone2/image/metrics/split_20_features/split_brier.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=removed_20_features%2Fbrier&panelSectionName=removed_20_features)
+![Split Brier](public/milestone2/image/metrics/split_20_features/split_brier.png)
 
 **Accuracy**
-[![Split Accuracy](public/milestone2/image/metrics/split_20_features/split_accuracy.png)](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/26yweo74?nw=nwusergafranijaz&panelDisplayName=removed_20_features%2Faccuracy&panelSectionName=removed_20_features)
-
+![Split Accuracy](public/milestone2/image/metrics/split_20_features/split_accuracy.png)
 ---
 
 These are the scores for the respective methods we tried.
@@ -483,16 +484,20 @@ Each run corresponds to a specific methodology or model configuration evaluated 
 ---
 
 #### **Grid Search**
-🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/gridsearch_best/v5/overview)
+🔗 [View on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/gridsearch_best/v5/overview)
+[Links to run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/ytm7z31n?nw=nwusersaleemibrahim)
 
 #### **MRMR (Minimum Redundancy Maximum Relevance)**
 🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/mrmr_top_20/v5/overview)
+[Links to run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/ytm7z31n?nw=nwusersaleemibrahim)
 
 #### **Lasso Regularization**
 🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/lasso_regularization/v5/overview)
+[Links to run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/ytm7z31n?nw=nwusersaleemibrahim)
 
 #### **Split with 20 Features Removed**
 🔗 [View Run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/artifacts/model/removed_20_features/v5/overview)
+[Links to run on W&B](https://wandb.ai/IFT6758-2025-B1/IFT6758-2025-B01/runs/ytm7z31n?nw=nwusersaleemibrahim)
 
 ---
 
