@@ -387,7 +387,7 @@ We also used Random Forest to find the best features in relation to the predicte
 
 [![Random Forest Feature Selected](public/milestone2/image/give_it_your_best_shot/figures/rf_feature_selection.png)](public/milestone2/image/give_it_your_best_shot/figures/rf_feature_selection.png)
 
-We then trained a model with the top 20 features selected by this Random Forest method, but this led to no notable improvements in model performance.
+We then trained a model with the top 20 features selected by this LASSO method, but this led to no notable improvements in model performance.
 
 We continued with other methods such as trying **different splits in the test and validation sets**, and **adding new features** such as `isRush`, which computes the time between the current and last event — if this difference in time is less than 4 seconds, we mark the event as a rush.
 All these methodologies did not yield any significant differences in performance, which can be observed in the following plots and metrics for the given models.
@@ -510,7 +510,7 @@ In this section, we evaluate the five final models on the untouched 2020–2021 
 
 ## Regular Season Games
 
-In this section, we evaluate the five required models on the regular-season portion of the 2020–2021 test set. These models include and any further reference for models is based on:
+In this section, we evaluate the five required models on the regular-season portion of the 2020–2021 test set. These models include the following, and all subsequent references to ‘the models’ will refer to them unless otherwise noted:
 
 - **Model 1:** Logistic Regression (Distance)
 - **Model 2:** Logistic Regression (Angle)
@@ -525,8 +525,8 @@ In this section, we evaluate the five required models on the regular-season port
 
 By examining the ROC curves and complementary evaluation figures, we can quickly identify clear performance differences among the models.
 
-At first glance, three models stand out from the others in Figure XX:
-**CatBoost, XGBoost, Logistic Regression with Distance + Angle, and Logistic Regression with Distance only.**
+At first glance, two models stand out from the others in all Figures:
+**CatBoost, XGBoost,** Logistic Regression with Distance and Angle
 These models achieve noticeably higher AUC values compared to the two weaker baselines.
 
 - **CatBoost: AUC = 0.775**
@@ -537,7 +537,7 @@ These models achieve noticeably higher AUC values compared to the two weaker bas
 
 Although these differences are not large enough to conclude statistical significance without confidence intervals, they indicate that the inclusion of distance—and especially the nonlinear structure learned by XGBoost—plays a crucial role in ranking shot danger.
 
-In contrast, the Logistic Regression model trained on angle alone (**Model 2**) performs substantially worse (**AUC = 0.509**), barely above random guessing. This is consistent with hockey intuition: angle alone contains limited information unless combined with distance.
+In contrast, the Logistic Regression model trained on angle alone (**Model 2**) performs substantially worse(**AUC = 0.509**), barely above random guessing. This is consistent with hockey intuition: angle alone contains limited information unless combined with distance and distance is a really strong predictor of a goal!
 
 The GridSearch-tuned CatBoost model (**Model 5**) performs the best  (**AUC = 0.775**), This is very similar to XGBoost, which is not a surprise as this was the exact behavoir observed in validation set 
 
@@ -547,9 +547,9 @@ Similarly, in the **cumulative proportion of goals** plot, XGBoost retrieves goa
 
 **Taken together**, these results indicate that for regular-season games:
 
-- XGBoost and CatBoost with all features are the two most effective model (this seems to indicate a pattern with Gradient Boosted Trees),
-- Logistic Regression (Distance + Angle) performs surprisingly well given its simplicity,
-- Angle alone proves insufficient for meaningful prediction.
+- XGBoost and CatBoost using all features are the two most effective models, which suggests a broader pattern favoring Gradient Boosted Trees
+- Logistic Regression (Distance + Angle) performs surprisingly well given its simplicity, and also shows how important **Distance** plays
+- Angle alone proves insufficient for meaningful prediction without **Distance**.
 
 ---
 
@@ -576,18 +576,18 @@ Logistic Model (Angle) remains the weakest baseline, with **AUC = 0.508**, nearl
 Model 5 (GridSearch CatBoost) performs the best (**AUC = 0.757**) and is closely followed by XGBoost (0.756)
 
 The **cumulative goal proportion** plots show similar behavior:
-XGBoost retrieves goals earlier and more consistently, whereas Model 2 continues to lag far behind.
+CatBoost and XGBoost retrieves goals earlier and more consistently, whereas Model 2 continues to lag far behind.
 
 The **calibration curves** also reveal an interesting contrast:
 
 - Logistic Regression models (Models 1–3) are relatively well-calibrated.
-- CatBoost tends to **overpredict** high probabilities, leading to overconfidence at the upper end.
+- CatBoost is fairly well-calibrated overall, but it becomes underconfident in the mid-probability range.
 
-**Adressing the observed differences seen in Playoff and Regular**
+**Adressing an interesting observed differences seen in Playoff and Regular**
 
-The differences in AUC between Playoff and Regular season data can likely be attributed to several factors. First, the sample size for Playoff games is much smaller, which naturally increases variance and makes model performance less stable. In addition, Playoff hockey is more competitive, with higher stakes and more structured defensive play. Teams often tighten their systems, and both shooters and goaltenders tend to be of higher average quality compared to the full regular-season population.
+The differences in AUC between Playoff and Regular season data can likely be attributed to several factors. First, the sample size for Playoff games is much smaller, which naturally increases variance and makes model performance less stable. In addition, Playoff hockey is more competitive, with higher quality and more structured defensive play. Teams often have better systems, and both shooters and goalies tend to be of higher average quality compared to the full regular-season.
 
-These factors can all contribute to the shifts we observe in AUC.However, it is important to note that the relative ranking of our models remains unchanged, suggesting that the underlying relationships captured by the models are consistent across contexts even if absolute performance varies.
+These factors can all contribute to the shifts we observe in AUC.However, it is still important to note that the relative ranking of our models remains unchanged, suggesting that the underlying relationships captured by the models is consistent across contexts even if absolute performance varies.
 
 ## Summary
 
@@ -596,7 +596,6 @@ Across both regular-season and playoff test sets, the evaluation consistently sh
 - Gradient Boosted Models  **XGBoost (Model 4)**  and **CatBoost** are the strongest model overalls, achieving the highest AUC, best goal-retrieval curves, and most consistent ranking performance.
 - **Logistic Regression (Distance + Angle, Model 3)** performs surprisingly well and serves as an effective linear baseline.
 - **Distance-only Logistic Regression (Model 1)** is simple yet competitive, confirming distance as the most predictive individual feature.
-- **GridSearch CatBoost (Model 5)** improves over the basic logistic baselines but still cannot match the performance of XGBoost.
 - **Angle-only Logistic Regression (Model 2)** is by far the weakest model, reinforcing that angle alone is not sufficient without distance.
 
 CatBoost is a powerful gradient boosting model with advantages such as native handling of categorical variables, strong regularization, and effective self-calibration. Because of these built-in capabilities, it is not surprising to observe slightly better performance from CatBoost compared to XGBoost. An interesting observation we noticed during this process, is that distance+angle is already a really powerful feature, in game context only can add so much to get better performances.
